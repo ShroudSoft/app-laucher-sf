@@ -1,0 +1,9 @@
+services:
+    client-gateway:
+      build: ./client-gateway-sf
+      ports:
+        - ${CLIENT_GATEWAY_PORT}:3000
+      volumes:
+        - ./client-gateway-sf/src:/usr/src/app/src
+      command: npm run start:dev
+
