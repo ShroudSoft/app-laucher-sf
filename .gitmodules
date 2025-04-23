@@ -1,0 +1,3 @@
+[submodule "client-gateway-sf"]
+	path = client-gateway-sf
+	url = git@github.com:ShroudSoft/client-gateway-sf.git
