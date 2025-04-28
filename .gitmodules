@@ -1,3 +1,12 @@
 [submodule "client-gateway-sf"]
 	path = client-gateway-sf
 	url = git@github.com:ShroudSoft/client-gateway-sf.git
+[submodule "users-ms-sf"]
+	path = users-ms-sf
+	url = git@github.com:ShroudSoft/users-ms-sf.git
+[submodule "business-ms-sf"]
+	path = business-ms-sf
+	url = git@github.com:ShroudSoft/business-ms-sf.git
+[submodule "exams-ms-sf"]
+	path = exams-ms-sf
+	url = git@github.com:ShroudSoft/exams-ms-sf.git

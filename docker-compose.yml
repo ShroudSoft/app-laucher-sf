@@ -1,9 +1,45 @@
 services:
-    client-gateway:
-      build: ./client-gateway-sf
-      ports:
-        - ${CLIENT_GATEWAY_PORT}:3000
-      volumes:
-        - ./client-gateway-sf/src:/usr/src/app/src
-      command: npm run start:dev
+  nats-server:
+    image: nats:latest
+    ports:
+      - "8222:8222"
+
+  client-gateway:
+    build: ./client-gateway-sf
+    ports:
+      - ${CLIENT_GATEWAY_PORT}:3000
+    volumes:
+      - ./client-gateway-sf/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - NATS_SERVERS=nats://nats-server:4222
+
+  users-ms-sf:
+    build: ./users-ms-sf
+    volumes:
+      - ./users-ms-sf/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${USERS_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+
+  # business-ms-sf:
+  #   build: ./business-ms-sf
+  #   volumes:
+  #     - ./business-ms-sf/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - NATS_SERVERS=nats://nats-server:4222
+  #     - DATABASE_URL=${BUSINESS_DATABASE_URL}
+
+  # exams-ms-sf:
+  #   build: ./exams-ms-sf
+  #   volumes:
+  #     - ./exams-ms-sf/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - NATS_SERVERS=nats://nats-server:4222
+  #     - DATABASE_URL=${EXAMS_DATABASE_URL}
 
