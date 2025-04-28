@@ -51,3 +51,7 @@ pids
 *.pid
 *.seed
 *.pid.lock
+
+
+#postgress
+postgres/
