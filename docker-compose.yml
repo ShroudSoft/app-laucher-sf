@@ -14,38 +14,46 @@ services:
     environment:
       - NATS_SERVERS=nats://nats-server:4222
 
-  users-ms-sf:
-    build: ./users-ms-sf
+  exams-taking-ms-sf:
+    build: ./exams-taking-ms-sf
     volumes:
-      - ./users-ms-sf/src:/usr/src/app/src
+      - ./exams-taking-ms-sf/src:/usr/src/app/src
     command: npm run start:dev
     environment:
       - NATS_SERVERS=nats://nats-server:4222
-      - DATABASE_URL=${USERS_DATABASE_URL}
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
 
-  business-ms-sf:
-    build: ./business-ms-sf
-    volumes:
-      - ./business-ms-sf/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - NATS_SERVERS=nats://nats-server:4222
-      - DATABASE_URL=${BUSINESS_DATABASE_URL}
-    depends_on:
-      - business-ms-db
+  # users-ms-sf:
+  #   build: ./users-ms-sf
+  #   volumes:
+  #     - ./users-ms-sf/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - NATS_SERVERS=nats://nats-server:4222
+  #     - DATABASE_URL=${USERS_DATABASE_URL}
+  #     - JWT_SECRET=${JWT_SECRET}
+  #     - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+
+  # business-ms-sf:
+  #   build: ./business-ms-sf
+  #   volumes:
+  #     - ./business-ms-sf/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - NATS_SERVERS=nats://nats-server:4222
+  #     - DATABASE_URL=${BUSINESS_DATABASE_URL}
+  #   depends_on:
+  #     - business-ms-db
   
-  business-ms-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_BUSINESS_DB}
-    volumes:
-      - ./postgres/business-db:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+  # business-ms-db:
+  #   image: postgres:latest
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #     POSTGRES_DB: ${POSTGRES_BUSINESS_DB}
+  #   volumes:
+  #     - ./postgres/business-db:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
 
   # exams-ms-sf:
   #   build: ./exams-ms-sf
