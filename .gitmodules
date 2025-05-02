@@ -10,9 +10,3 @@
 [submodule "exams-ms-sf"]
 	path = exams-ms-sf
 	url = git@github.com:ShroudSoft/exams-ms-sf.git
-[submodule "exams-taking-ms-sf"]
-	path = exams-taking-ms-sf
-	url = git@github.com:ShroudSoft/exams-taking-ms-sf.git
-[submodule "notification-ms-sf"]
-	path = notification-ms-sf
-	url = git@github.com:ShroudSoft/notification-ms-sf.git
