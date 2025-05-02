@@ -14,24 +14,24 @@ services:
     environment:
       - NATS_SERVERS=nats://nats-server:4222
 
-  exams-taking-ms-sf:
-    build: ./exams-taking-ms-sf
-    volumes:
-      - ./exams-taking-ms-sf/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - NATS_SERVERS=nats://nats-server:4222
-
-  # users-ms-sf:
-  #   build: ./users-ms-sf
+  # exams-taking-ms-sf:
+  #   build: ./exams-taking-ms-sf
   #   volumes:
-  #     - ./users-ms-sf/src:/usr/src/app/src
+  #     - ./exams-taking-ms-sf/src:/usr/src/app/src
   #   command: npm run start:dev
   #   environment:
   #     - NATS_SERVERS=nats://nats-server:4222
-  #     - DATABASE_URL=${USERS_DATABASE_URL}
-  #     - JWT_SECRET=${JWT_SECRET}
-  #     - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+
+  users-ms-sf:
+    build: ./users-ms-sf
+    volumes:
+      - ./users-ms-sf/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${USERS_DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
 
   # business-ms-sf:
   #   build: ./business-ms-sf
@@ -63,4 +63,13 @@ services:
   #   environment:
   #     - NATS_SERVERS=nats://nats-server:4222
   #     - DATABASE_URL=${EXAMS_DATABASE_URL}
+
+  # notification-ms-sf:
+  #   build: ./notification-ms-sf
+  #   volumes:
+  #     - ./notification-ms-sf/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - NATS_SERVERS=nats://nats-server:4222
+  #     - EMAIL_APPLICATION_PASSWORD:${EMAIL_APPLICATION_PASSWORD}
 
