@@ -4,27 +4,6 @@ services:
     ports:
       - "8222:8222"
 
-  client-gateway:
-    build: ./client-gateway-sf
-    ports:
-      - ${CLIENT_GATEWAY_PORT}:3000
-    volumes:
-      - ./client-gateway-sf/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - NATS_SERVERS=nats://nats-server:4222
-
-<<<<<<< HEAD
-  # exams-taking-ms-sf:
-  #   build: ./exams-taking-ms-sf
-  #   volumes:
-  #     - ./exams-taking-ms-sf/src:/usr/src/app/src
-  #   command: npm run start:dev
-  #   environment:
-  #     - NATS_SERVERS=nats://nats-server:4222
-
-=======
->>>>>>> parent of 186eeae (Add submodule configurations for exams-taking-ms-sf and notification-ms-sf)
   users-ms-sf:
     build: ./users-ms-sf
     volumes:
@@ -35,19 +14,32 @@ services:
       - DATABASE_URL=${USERS_DATABASE_URL}
       - JWT_SECRET=${JWT_SECRET}
       - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    depends_on:
+      - nats-server
 
-<<<<<<< HEAD
-  # business-ms-sf:
-  #   build: ./business-ms-sf
-  #   volumes:
-  #     - ./business-ms-sf/src:/usr/src/app/src
-  #   command: npm run start:dev
-  #   environment:
-  #     - NATS_SERVERS=nats://nats-server:4222
-  #     - DATABASE_URL=${BUSINESS_DATABASE_URL}
-  #   depends_on:
-  #     - business-ms-db
-=======
+  client-gateway:
+    build: ./client-gateway-sf
+    ports:
+      - ${CLIENT_GATEWAY_PORT}:${CLIENT_GATEWAY_PORT}
+    volumes:
+      - ./client-gateway-sf/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - NATS_SERVERS=nats://nats-server:4222
+      - PORT=${CLIENT_GATEWAY_PORT}
+
+  exams-taking-ms-sf:
+    build: ./exams-taking-ms-sf
+    volumes:
+      - ./exams-taking-ms-sf/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${EXAMS_TAKING_DATABASE_URL}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+
   business-ms-sf:
     build: ./business-ms-sf
     volumes:
@@ -56,10 +48,7 @@ services:
     environment:
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=${BUSINESS_DATABASE_URL}
-    depends_on:
-      - business-ms-db
->>>>>>> parent of 186eeae (Add submodule configurations for exams-taking-ms-sf and notification-ms-sf)
-  
+
   business-ms-db:
     image: postgres:latest
     environment:
@@ -71,14 +60,25 @@ services:
     ports:
       - "5432:5432"
 
-  # exams-ms-sf:
-  #   build: ./exams-ms-sf
-  #   volumes:
-  #     - ./exams-ms-sf/src:/usr/src/app/src
-  #   command: npm run start:dev
-  #   environment:
-  #     - NATS_SERVERS=nats://nats-server:4222
-  #     - DATABASE_URL=${EXAMS_DATABASE_URL}
+  exams-ms-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_EXAMS_DB}
+    volumes:
+      - ./postgres/exams-db:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  exams-ms-sf:
+    build: ./exams-ms-sf
+    volumes:
+      - ./exams-ms-sf/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${EXAMS_DATABASE_URL}
 
   # notification-ms-sf:
   #   build: ./notification-ms-sf
@@ -87,5 +87,4 @@ services:
   #   command: npm run start:dev
   #   environment:
   #     - NATS_SERVERS=nats://nats-server:4222
-  #     - EMAIL_APPLICATION_PASSWORD:${EMAIL_APPLICATION_PASSWORD}
-
+  #     - EMAIL_APPLICATION_PASSWORD=${EMAIL_APPLICATION_PASSWORD}
