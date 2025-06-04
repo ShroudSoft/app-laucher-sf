@@ -15,4 +15,4 @@
 	url = git@github.com:ShroudSoft/notification-ms-sf.git
 [submodule "exams-taking-ms-sf"]
 	path = exams-taking-ms-sf
-	url = git@github.com:ShroudSoft/exams-taking-ms-sf.gitq
+	url = git@github.com:ShroudSoft/exams-taking-ms-sf.git
