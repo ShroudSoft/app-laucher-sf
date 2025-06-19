@@ -16,3 +16,6 @@
 [submodule "exams-taking-ms-sf"]
 	path = exams-taking-ms-sf
 	url = git@github.com:ShroudSoft/exams-taking-ms-sf.git
+[submodule "audio-script-ms-sf"]
+	path = audio-script-ms-sf
+	url = git@github.com:ShroudSoft/audio-script-ms-sf.git

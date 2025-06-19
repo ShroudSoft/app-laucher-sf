@@ -28,63 +28,75 @@ services:
       - NATS_SERVERS=nats://nats-server:4222
       - PORT=${CLIENT_GATEWAY_PORT}
 
-  exams-taking-ms-sf:
-    build: ./exams-taking-ms-sf
-    volumes:
-      - ./exams-taking-ms-sf/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - NATS_SERVERS=nats://nats-server:4222
-      - DATABASE_URL=${EXAMS_TAKING_DATABASE_URL}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+  # exams-taking-ms-sf:
+  #   build: ./exams-taking-ms-sf
+  #   volumes:
+  #     - ./exams-taking-ms-sf/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - NATS_SERVERS=nats://nats-server:4222
+  #     - DATABASE_URL=${EXAMS_TAKING_DATABASE_URL}
+  #     - REDIS_HOST=${REDIS_HOST}
+  #     - REDIS_PORT=${REDIS_PORT}
+  #     - REDIS_PASSWORD=${REDIS_PASSWORD}
 
-  business-ms-sf:
-    build: ./business-ms-sf
-    volumes:
-      - ./business-ms-sf/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - NATS_SERVERS=nats://nats-server:4222
-      - DATABASE_URL=${BUSINESS_DATABASE_URL}
+  # business-ms-sf:
+  #   build: ./business-ms-sf
+  #   volumes:
+  #     - ./business-ms-sf/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - NATS_SERVERS=nats://nats-server:4222
+  #     - DATABASE_URL=${BUSINESS_DATABASE_URL}
 
-  business-ms-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_BUSINESS_DB}
-    volumes:
-      - ./postgres/business-db:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+  # business-ms-db:
+  #   image: postgres:latest
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #     POSTGRES_DB: ${POSTGRES_BUSINESS_DB}
+  #   volumes:
+  #     - ./postgres/business-db:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
 
-  exams-ms-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_EXAMS_DB}
-    volumes:
-      - ./postgres/exams-db:/var/lib/postgresql/data
-    ports:
-      - "5433:5432"
+  # exams-ms-db:
+  #   image: postgres:latest
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #     POSTGRES_DB: ${POSTGRES_EXAMS_DB}
+  #   volumes:
+  #     - ./postgres/exams-db:/var/lib/postgresql/data
+  #   ports:
+  #     - "5433:5432"
 
-  exams-ms-sf:
-    build: ./exams-ms-sf
-    volumes:
-      - ./exams-ms-sf/src:/usr/src/app/src
-    command: npm run start:dev
-    environment:
-      - NATS_SERVERS=nats://nats-server:4222
-      - DATABASE_URL=${EXAMS_DATABASE_URL}
+  # exams-ms-sf:
+  #   build: ./exams-ms-sf
+  #   volumes:
+  #     - ./exams-ms-sf/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - NATS_SERVERS=nats://nats-server:4222
+  #     - DATABASE_URL=${EXAMS_DATABASE_URL}
 
   # notification-ms-sf:
   #   build: ./notification-ms-sf
   #   volumes:
   #     - ./notification-ms-sf/src:/usr/src/app/src
-  #   command: npm run start:dev
+  #   command: npm run start:prod
   #   environment:
   #     - NATS_SERVERS=nats://nats-server:4222
   #     - EMAIL_APPLICATION_PASSWORD=${EMAIL_APPLICATION_PASSWORD}
+  #     - EMAIL_APLICATION_HOST=${EMAIL_APLICATION_HOST}
+
+  audio-script-ms-sf:
+    build: ./audio-script-ms-sf
+    volumes:
+      - ./audio-script-ms-sf/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=${AUDIO_SCRIPT_DATABASE_URL}
+    depends_on:
+      - nats-server
