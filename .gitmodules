@@ -19,3 +19,6 @@
 [submodule "audio-script-ms-sf"]
 	path = audio-script-ms-sf
 	url = git@github.com:ShroudSoft/audio-script-ms-sf.git
+[submodule "firebase-trigger-sf"]
+	path = firebase-trigger-sf
+	url = git@github.com:ShroudSoft/firebase-trigger-sf.git

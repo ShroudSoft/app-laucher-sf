@@ -80,23 +80,30 @@ services:
   #     - NATS_SERVERS=nats://nats-server:4222
   #     - DATABASE_URL=${EXAMS_DATABASE_URL}
 
-  # notification-ms-sf:
-  #   build: ./notification-ms-sf
-  #   volumes:
-  #     - ./notification-ms-sf/src:/usr/src/app/src
-  #   command: npm run start:prod
-  #   environment:
-  #     - NATS_SERVERS=nats://nats-server:4222
-  #     - EMAIL_APPLICATION_PASSWORD=${EMAIL_APPLICATION_PASSWORD}
-  #     - EMAIL_APLICATION_HOST=${EMAIL_APLICATION_HOST}
-
-  audio-script-ms-sf:
-    build: ./audio-script-ms-sf
+  notification-ms-sf:
+    build: ./notification-ms-sf
     volumes:
-      - ./audio-script-ms-sf/src:/usr/src/app/src
+      - ./notification-ms-sf/src:/usr/src/app/src
     command: npm run start:dev
     environment:
       - NATS_SERVERS=nats://nats-server:4222
-      - DATABASE_URL=${AUDIO_SCRIPT_DATABASE_URL}
-    depends_on:
-      - nats-server
+      - EMAIL_APPLICATION_PASSWORD=${EMAIL_APPLICATION_PASSWORD}
+      - EMAIL_APLICATION_HOST=${EMAIL_APLICATION_HOST}
+      - EMAIL_APPLICATION_USER=${EMAIL_APPLICATION_USER}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_SECURE=${EMAIL_SECURE}
+
+  # audio-script-ms-sf:
+  #   build: ./audio-script-ms-sf
+  #   volumes:
+  #     - ./audio-script-ms-sf/src:/usr/src/app/src
+  #   command: npm run start:dev
+  #   environment:
+  #     - NATS_SERVERS=nats://nats-server:4222
+  #     - DATABASE_URL=${AUDIO_SCRIPT_DATABASE_URL}
+  #     - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID}
+  #     - FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}
+  #     - FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL}
+  #     - FIREBASE_STORAGE_BUCKET=${FIREBASE_STORAGE_BUCKET}
+  #   depends_on:
+  #     - nats-server
